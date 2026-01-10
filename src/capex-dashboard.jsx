@@ -381,10 +381,7 @@ export default function CapexDashboard() {
         {/* Header */}
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 bg-white rounded-xl p-4 shadow">
           <div>
-            <h1 className="text-xl font-bold text-gray-800">Department CAPEX Expense Dashboard</h1>
-            <div className="text-sm text-gray-500 mt-1">
-              {department.name} | {department.costCenter} | FY {department.fiscalYear}
-            </div>
+            <h1 className="text-xl font-bold text-gray-800">Maintenance CAPEX Dashboard</h1>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs text-gray-400">Last Updated: {department.lastUpdated}</span>
