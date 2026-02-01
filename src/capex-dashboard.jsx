@@ -25,59 +25,111 @@ const PETRONAS = {
 };
 const BRAND_PALETTE = [PETRONAS.emerald, PETRONAS.blue, PETRONAS.yellow, PETRONAS.purple, PETRONAS.lime];
 
-// Sample data matching Excel structure
 const SAMPLE_DEPARTMENT = {
   name: "Maintenance & Reliability",
   costCenter: "PCFK-MR-001",
-  totalBudget: 15000000,
-  fiscalYear: 2025,
-  departmentHead: "Department Head Name",
-  budgetController: "Budget Controller Name",
+  totalBudget: 103782088,
+  fiscalYear: 2026,
+  departmentHead: "M Fairoz B A Kahar",
+  budgetController: "Siti Khadhijah Zulkafli",
   currency: "MYR",
-  lastUpdated: "2026-01-07",
+  lastUpdated: "2026-01-19",
 };
 
 const SAMPLE_PROJECTS = [
-  { id: "PRJ-001", name: "Ammonia Compressor Overhaul", costCenter: "PCFK-AMM-001", originalBudget: 3500000, contractValue: 3200000, transferIn: 200000, transferOut: 0, currentBudget: 3700000, startDate: "2025-01-01", endDate: "2025-06-30", projectManager: "Ahmad Razak", vendor: "Vendor A Sdn Bhd", paymentTerms: "Net 30", status: "Active", priority: "High" },
-  { id: "PRJ-002", name: "Urea Prilling Tower Upgrade", costCenter: "PCFK-URE-002", originalBudget: 2800000, contractValue: 2500000, transferIn: 50000, transferOut: 0, currentBudget: 2850000, startDate: "2025-02-01", endDate: "2025-08-31", projectManager: "Siti Aminah", vendor: "Vendor B Sdn Bhd", paymentTerms: "Net 45", status: "Active", priority: "High" },
-  { id: "PRJ-003", name: "DCS Migration Phase 1", costCenter: "PCFK-INS-003", originalBudget: 4200000, contractValue: 4000000, transferIn: 150000, transferOut: 0, currentBudget: 4350000, startDate: "2025-03-01", endDate: "2025-12-31", projectManager: "Lee Wei Ming", vendor: "Vendor C Sdn Bhd", paymentTerms: "Milestone", status: "Active", priority: "Critical" },
-  { id: "PRJ-004", name: "Cooling Tower Refurbishment", costCenter: "PCFK-UTL-004", originalBudget: 1800000, contractValue: 1650000, transferIn: 0, transferOut: 350000, currentBudget: 1450000, startDate: "2025-04-01", endDate: "2025-09-30", projectManager: "Muthu Rajan", vendor: "Vendor D Sdn Bhd", paymentTerms: "Net 30", status: "Planning", priority: "Medium" },
-  { id: "PRJ-005", name: "Safety Valve Replacement", costCenter: "PCFK-MNT-005", originalBudget: 950000, contractValue: 900000, transferIn: 0, transferOut: 50000, currentBudget: 900000, startDate: "2025-05-01", endDate: "2025-07-31", projectManager: "Farah Nadia", vendor: "Vendor E Sdn Bhd", paymentTerms: "Net 30", status: "Active", priority: "High" },
+  { id: "PRJ-001", name: "ABB LV Switchboard Retrofit", wbs: "P.220080001.03.0303", projectManager: "Suhaimi Samijan", discipline: "Electrical", originalBudget: 426665, contractValue: 188151.84, transferIn: 0, transferOut: 0, currentBudget: 426665, budgetVariance: 238513.16, startDate: "2025-06-01", endDate: "2027-12-01", status: "Active", priority: "High", remarks: "" },
+  { id: "PRJ-002", name: "Ammoniation improvement at Urea Reactor during start-up activity", wbs: "", projectManager: "Tan Pin Chian", discipline: "Instrument", originalBudget: 397527, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 397527, budgetVariance: 397527, startDate: "", endDate: "2027-12-01", status: "Planning", priority: "High", remarks: "" },
+  { id: "PRJ-003", name: "DCS HIS OPC EWS Replacement", wbs: "", projectManager: "Hasnul Munir", discipline: "Instrument", originalBudget: 3665326, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 3665326, budgetVariance: 3665326, startDate: "2026-01-01", endDate: "2027-12-01", status: "Planning", priority: "Critical", remarks: "" },
+  { id: "PRJ-004", name: "E-12-02-01 HEX Replacement", wbs: "", projectManager: "M Amin Zikri", discipline: "Mechanical", originalBudget: 960000, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 960000, budgetVariance: 960000, startDate: "2026-04-04", endDate: "2027-12-01", status: "Planning", priority: "Medium", remarks: "" },
+  { id: "PRJ-005", name: "E-13-06 Replacement of Reformed Gas Waste Heat Boiler", wbs: "P.240080001.03.0210", projectManager: "M Najib Ramli", discipline: "Mechanical", originalBudget: 18800000, contractValue: 17699500, transferIn: 0, transferOut: 0, currentBudget: 18800000, budgetVariance: 1100500, startDate: "2025-06-01", endDate: "2027-12-01", status: "Active", priority: "High", remarks: "" },
+  { id: "PRJ-006", name: "E-18-02B-01 Replacement", wbs: "", projectManager: "M Amin Zikri", discipline: "Mechanical", originalBudget: 2700000, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 2700000, budgetVariance: 2700000, startDate: "2026-04-04", endDate: "2027-12-01", status: "Planning", priority: "High", remarks: "" },
+  { id: "PRJ-007", name: "E-18-04 HEX Replacement", wbs: "", projectManager: "M Amin Zikri", discipline: "Mechanical", originalBudget: 5517600, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 5517600, budgetVariance: 5517600, startDate: "2026-01-01", endDate: "2027-12-01", status: "Planning", priority: "High", remarks: "" },
+  { id: "PRJ-008", name: "E-19-03A HEX Replacement", wbs: "P.250080001.03.0209", projectManager: "M Najib Ramli", discipline: "Mechanical", originalBudget: 1560000, contractValue: 665000, transferIn: 0, transferOut: 0, currentBudget: 1560000, budgetVariance: 895000, startDate: "2025-12-01", endDate: "2027-12-01", status: "Active", priority: "Critical", remarks: "" },
+  { id: "PRJ-009", name: "Fire Water Pump And Foam Panel Replacement", wbs: "P.250080001.03.0308", projectManager: "M Azli Yusof", discipline: "Electrical", originalBudget: 400000, contractValue: 408349.20, transferIn: 0, transferOut: 0, currentBudget: 400000, budgetVariance: -8349.20, startDate: "2025-06-01", endDate: "2030-12-01", status: "Active", priority: "Medium", remarks: "" },
+  { id: "PRJ-010", name: "Improvement of ammonia loading arm at loading facility", wbs: "P.250080001.03.0245", projectManager: "M Amin Zikri", discipline: "Mechanical", originalBudget: 231000, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 231000, budgetVariance: 231000, startDate: "2025-06-01", endDate: "2026-12-01", status: "Planning", priority: "High", remarks: "" },
+  { id: "PRJ-011", name: "Insurance Spares for Melamine", wbs: "P.250080001.03.0220", projectManager: "Sharul Rizal M Zin", discipline: "Melamine", originalBudget: 4000000, contractValue: 421140, transferIn: 0, transferOut: 0, currentBudget: 4000000, budgetVariance: 3578860, startDate: "2025-06-01", endDate: "2026-12-01", status: "Active", priority: "High", remarks: "" },
+  { id: "PRJ-012", name: "K-11-01 Rotor Inspection and Refurbishment", wbs: "P.240080001.03.0203", projectManager: "M Zulkifli M Zain", discipline: "Rotating", originalBudget: 500000, contractValue: 30000, transferIn: 0, transferOut: 0, currentBudget: 500000, budgetVariance: 470000, startDate: "2025-06-01", endDate: "2026-12-01", status: "Active", priority: "High", remarks: "" },
+  { id: "PRJ-013", name: "K-12-01 HP Rotor Inspection and Refurbishment", wbs: "P.240080001.03.0204", projectManager: "M Zulkifli M Zain", discipline: "Rotating", originalBudget: 500000, contractValue: 30000, transferIn: 0, transferOut: 0, currentBudget: 500000, budgetVariance: 470000, startDate: "2025-06-01", endDate: "2026-12-01", status: "Active", priority: "Critical", remarks: "" },
+  { id: "PRJ-014", name: "K-12-01 LP Rotor Inspection and Refurbishment", wbs: "P.240080001.03.0205", projectManager: "M Zulkifli M Zain", discipline: "Rotating", originalBudget: 500000, contractValue: 60000, transferIn: 0, transferOut: 0, currentBudget: 500000, budgetVariance: 440000, startDate: "2025-06-01", endDate: "2026-12-01", status: "Active", priority: "Medium", remarks: "" },
+  { id: "PRJ-015", name: "KT-12-01 ACV EHPC Actuator Upgrade", wbs: "", projectManager: "A Hadi B M Yusoff", discipline: "Rotating", originalBudget: 1167403, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 1167403, budgetVariance: 1167403, startDate: "2026-04-01", endDate: "2027-12-01", status: "Planning", priority: "High", remarks: "" },
+  { id: "PRJ-016", name: "LV Panel Protection Relay Replacement", wbs: "", projectManager: "M Farid Bahari", discipline: "Electrical", originalBudget: 422730, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 422730, budgetVariance: 422730, startDate: "2026-04-01", endDate: "2027-12-01", status: "Planning", priority: "High", remarks: "" },
+  { id: "PRJ-017", name: "Motor Operated Valve (MOV) Replacement", wbs: "", projectManager: "M Azli Yusof", discipline: "Electrical", originalBudget: 300000, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 300000, budgetVariance: 300000, startDate: "2026-04-01", endDate: "2027-12-01", status: "Planning", priority: "Critical", remarks: "Potential to cancel" },
+  { id: "PRJ-018", name: "Procurement of Material Handling Equipment for HP reactor R-42-01", wbs: "P.250080001.03.0501", projectManager: "Sharul Rizal M Zin", discipline: "Melamine", originalBudget: 1412500, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 1412500, budgetVariance: 1412500, startDate: "2025-06-01", endDate: "2026-12-01", status: "Active", priority: "Medium", remarks: "" },
+  { id: "PRJ-019", name: "Regulatory Shutdown 2026 (Operational)", wbs: "", projectManager: "Khairil Izham", discipline: "TA", originalBudget: 1928680, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 1928680, budgetVariance: 1928680, startDate: "2025-01-01", endDate: "2026-12-01", status: "Active", priority: "High", remarks: "" },
+  { id: "PRJ-020", name: "Regulatory Shutdown 2026 (Statutory)", wbs: "T.2600801.S", projectManager: "Khairil Izham", discipline: "TA", originalBudget: 33530566, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 33530566, budgetVariance: 33530566, startDate: "2025-01-01", endDate: "2026-12-01", status: "Active", priority: "High", remarks: "" },
+  { id: "PRJ-021", name: "Rejuvenation HVAC of process & non-process", wbs: "P.250080001.03.0230", projectManager: "M Azli Yusof", discipline: "Electrical", originalBudget: 2850000, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 2850000, budgetVariance: 2850000, startDate: "2025-06-01", endDate: "2028-12-01", status: "Active", priority: "High", remarks: "" },
+  { id: "PRJ-022", name: "Replacement of Underground Instrument Multipair Cable to above ground", wbs: "", projectManager: "Hasnul Munir", discipline: "Instrument", originalBudget: 720000, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 720000, budgetVariance: 720000, startDate: "2026-01-01", endDate: "2030-12-01", status: "Planning", priority: "Critical", remarks: "" },
+  { id: "PRJ-023", name: "Shiploader Rejuvenation", wbs: "P.240080001.02.0302", projectManager: "Suhaimi Samijan", discipline: "Electrical", originalBudget: 1659039, contractValue: 100000, transferIn: 0, transferOut: 0, currentBudget: 1659039, budgetVariance: 1559039, startDate: "2025-06-01", endDate: "2027-12-01", status: "Active", priority: "Medium", remarks: "Completed in 2025 except logistics and accessories" },
+  { id: "PRJ-024", name: "Siemens HV Switchgear Retrofit (VCB & VCU)", wbs: "P.250080001.03.0318", projectManager: "M Farid Bahari", discipline: "Electrical", originalBudget: 1952640, contractValue: 1925000, transferIn: 0, transferOut: 0, currentBudget: 1952640, budgetVariance: 27640, startDate: "2025-06-01", endDate: "2027-12-01", status: "Active", priority: "High", remarks: "Continue from 2025" },
+  { id: "PRJ-025", name: "To Purchase Gearbox for KG-31-01", wbs: "", projectManager: "Ahmad Akmal Adnan", discipline: "Rotating", originalBudget: 3250000, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 3250000, budgetVariance: 3250000, startDate: "2026-01-01", endDate: "2027-12-01", status: "Planning", priority: "High", remarks: "" },
+  { id: "PRJ-026", name: "TURNAROUND 2027 (Operational)", wbs: "", projectManager: "Khairil Izham", discipline: "TA", originalBudget: 5103660, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 5103660, budgetVariance: 5103660, startDate: "2026-01-01", endDate: "2027-12-01", status: "Planning", priority: "High", remarks: "" },
+  { id: "PRJ-027", name: "TURNAROUND 2027 (Statutory)", wbs: "", projectManager: "Khairil Izham", discipline: "TA", originalBudget: 4851952, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 4851952, budgetVariance: 4851952, startDate: "2026-01-01", endDate: "2028-12-01", status: "Planning", priority: "Critical", remarks: "" },
+  { id: "PRJ-028", name: "UPS Statron Replacement", wbs: "", projectManager: "M Farid Bahari", discipline: "Electrical", originalBudget: 1474800, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 1474800, budgetVariance: 1474800, startDate: "2026-04-01", endDate: "2027-12-01", status: "Planning", priority: "Medium", remarks: "" },
+  { id: "PRJ-029", name: "Urea Angle Valve Replacement", wbs: "", projectManager: "Salman Said", discipline: "Mechanical", originalBudget: 3000000, contractValue: 0, transferIn: 0, transferOut: 0, currentBudget: 3000000, budgetVariance: 3000000, startDate: "2025-03-01", endDate: "2026-12-01", status: "Planning", priority: "High", remarks: "Long lead item" },
+  { id: "PRJ-030", name: "Replacement of Alarm Management System (AMS)", wbs: "P.240080001.03.0208", projectManager: "Hasnul Munir", discipline: "Instrument", originalBudget: 0, contractValue: 100000, transferIn: 0, transferOut: 0, currentBudget: 0, budgetVariance: -100000, startDate: "2025-03-01", endDate: "2026-12-01", status: "Active", priority: "High", remarks: "Continue from last year" },
+  { id: "PRJ-031", name: "Rejuvenation HVAC of PDF & UET (BUSH)", wbs: "P.250080001.03.0230", projectManager: "M Azli B Yusof", discipline: "Electrical", originalBudget: 0, contractValue: 193000, transferIn: 0, transferOut: 0, currentBudget: 0, budgetVariance: -193000, startDate: "2025-10-01", endDate: "2026-12-01", status: "Active", priority: "High", remarks: "" },
+  { id: "PRJ-032", name: "Walkie Talkie License and System Upgrade", wbs: "P.250080001.03.0504", projectManager: "Hasnul Munir", discipline: "Instrument", originalBudget: 0, contractValue: 150010.56, transferIn: 0, transferOut: 0, currentBudget: 0, budgetVariance: -150010.56, startDate: "", endDate: "", status: "Active", priority: "Medium", remarks: "" },
+  { id: "PRJ-033", name: "K-19-01 HP DE DGS Refurbishment", wbs: "", projectManager: "M Akmal Rahim", discipline: "Rotating", originalBudget: 0, contractValue: 650000, transferIn: 0, transferOut: 0, currentBudget: 0, budgetVariance: -650000, startDate: "", endDate: "", status: "Planning", priority: "High", remarks: "New depends on RSD2026" },
+  { id: "PRJ-034", name: "K-62-01A/B Compressor Replacement", wbs: "", projectManager: "Luqman Hakim", discipline: "Rotating", originalBudget: 0, contractValue: 200000, transferIn: 0, transferOut: 0, currentBudget: 0, budgetVariance: -200000, startDate: "", endDate: "", status: "Planning", priority: "High", remarks: "New. To present BOP" },
+  { id: "PRJ-035", name: "Instrument Calibration Tools to Cater Melamine Plant Equipment", wbs: "P.250080001.03.0502", projectManager: "Siti Khadhijah", discipline: "Instrument", originalBudget: 0, contractValue: 200000, transferIn: 0, transferOut: 0, currentBudget: 0, budgetVariance: -200000, startDate: "", endDate: "", status: "Active", priority: "High", remarks: "Continue from last year" },
+  { id: "PRJ-036", name: "Structure Integrity Management System (SIMS) Rejuvenation - Phase 1", wbs: "", projectManager: "M Najib Ramli", discipline: "Mechanical", originalBudget: 0, contractValue: 2000000, transferIn: 0, transferOut: 0, currentBudget: 0, budgetVariance: -2000000, startDate: "", endDate: "", status: "Planning", priority: "High", remarks: "New" },
+  { id: "PRJ-037", name: "Piping & Insulation Rejuvenation and Life Extension (PIREL) - Phase 1", wbs: "", projectManager: "M Najib Ramli", discipline: "Mechanical", originalBudget: 0, contractValue: 2000000, transferIn: 0, transferOut: 0, currentBudget: 0, budgetVariance: -2000000, startDate: "", endDate: "", status: "Planning", priority: "High", remarks: "New" },
+];
+
+const SAMPLE_UTILIZATION = [
+  { projectId: "PRJ-001", projectName: "ABB LV Switchboard Retrofit", poNumber: "3400885717-05", milestone: "SAT", milestonePct: 0.10, planDate: "", planAmount: 94075.92, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-001", projectName: "ABB LV Switchboard Retrofit", poNumber: "3400826255-06", milestone: "Service Completion Certificate and Final Documentation", milestonePct: 0.10, planDate: "", planAmount: 94075.92, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-005", projectName: "E-13-06 Replacement of Reformed Gas Waste Heat Boiler", poNumber: "3400826255-04", milestone: "Upon Shipment Readiness", milestonePct: 0.45, planDate: "2026-12-01", planAmount: 6479550, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-005", projectName: "E-13-06 Replacement of Reformed Gas Waste Heat Boiler", poNumber: "3400826255-05", milestone: "Final Documentation", milestonePct: 0.05, planDate: "2026-12-01", planAmount: 719950, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-005", projectName: "E-13-06 Replacement of Reformed Gas Waste Heat Boiler", poNumber: "XXXXXXXXX-01", milestone: "Purchase Order (PO)", milestonePct: 0.10, planDate: "2026-07-01", planAmount: 3000000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-005", projectName: "E-13-06 Replacement of Reformed Gas Waste Heat Boiler", poNumber: "XXXXXXXXX-02", milestone: "Detail engineering", milestonePct: 0.05, planDate: "2026-10-01", planAmount: 1500000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-005", projectName: "E-13-06 Replacement of Reformed Gas Waste Heat Boiler", poNumber: "XXXXXXXXX-03", milestone: "PO issuance to sub-CONTRACTOR", milestonePct: 0.10, planDate: "2026-12-01", planAmount: 3000000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-005", projectName: "E-13-06 Replacement of Reformed Gas Waste Heat Boiler", poNumber: "XXXXXXXXX-04", milestone: "PO issuance for materials", milestonePct: 0.10, planDate: "2026-12-01", planAmount: 3000000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-008", projectName: "E-19-03A HEX Replacement", poNumber: "3400937592-04", milestone: "Delivered to site", milestonePct: 0.45, planDate: "", planAmount: 532000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-008", projectName: "E-19-03A HEX Replacement", poNumber: "3400937592-05", milestone: "Final Documentation", milestonePct: 0.05, planDate: "", planAmount: 133000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-009", projectName: "Fire Water Pump And Foam Panel Replacement", poNumber: "3400886843-05", milestone: "SAT", milestonePct: 0.20, planDate: "", planAmount: 272232.80, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-009", projectName: "Fire Water Pump And Foam Panel Replacement", poNumber: "3400886843-06", milestone: "Final Documentation", milestonePct: 0.10, planDate: "", planAmount: 136116.40, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-012", projectName: "K-11-01 Rotor Inspection and Refurbishment", poNumber: "", milestone: "Logistics", milestonePct: 1.0, planDate: "2026-05-01", planAmount: 30000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-013", projectName: "K-12-01 HP Rotor Inspection and Refurbishment", poNumber: "", milestone: "Logistics", milestonePct: 1.0, planDate: "2026-06-01", planAmount: 30000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-014", projectName: "K-12-01 LP Rotor Inspection and Refurbishment", poNumber: "", milestone: "Logistics", milestonePct: 1.0, planDate: "2026-10-01", planAmount: 30000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-014", projectName: "K-12-01 LP Rotor Inspection and Refurbishment", poNumber: "", milestone: "FAT", milestonePct: 1.0, planDate: "2026-08-01", planAmount: 30000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-023", projectName: "Shiploader Rejuvenation", poNumber: "", milestone: "Logistics", milestonePct: 1.0, planDate: "", planAmount: 100000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-024", projectName: "Siemens HV Switchgear Retrofit (VCB & VCU)", poNumber: "3400849056-04", milestone: "Factory Acceptance Test", milestonePct: 0.30, planDate: "", planAmount: 825000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-024", projectName: "Siemens HV Switchgear Retrofit (VCB & VCU)", poNumber: "3400849056-05", milestone: "Site Acceptance Test, Installation, Testing & Commissioning", milestonePct: 0.30, planDate: "", planAmount: 825000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-024", projectName: "Siemens HV Switchgear Retrofit (VCB & VCU)", poNumber: "3400849056-06", milestone: "Final Documentation", milestonePct: 0.10, planDate: "", planAmount: 275000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-031", projectName: "Rejuvenation HVAC of PDF & UET (BUSH)", poNumber: "3400852305-05", milestone: "Final Documentation", milestonePct: 0.10, planDate: "", planAmount: 193000, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-032", projectName: "Walkie Talkie License and System Upgrade", poNumber: "3400927124-02", milestone: "Project completion", milestonePct: 0.30, planDate: "", planAmount: 150010.56, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-011", projectName: "Insurance Spares for Melamine", poNumber: "3400930767-04", milestone: "Upon WORK delivery/ready to ship", milestonePct: 0.25, planDate: "", planAmount: 157062.50, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-011", projectName: "Insurance Spares for Melamine", poNumber: "3400920956-04", milestone: "Upon WORK delivery/ready to ship", milestonePct: 0.25, planDate: "", planAmount: 87077.50, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-011", projectName: "Insurance Spares for Melamine", poNumber: "3400917364-04", milestone: "Upon WORK delivery/ready to ship", milestonePct: 0.25, planDate: "", planAmount: 23875, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-011", projectName: "Insurance Spares for Melamine", poNumber: "3400920995-04", milestone: "Upon WORK delivery/ready to ship", milestonePct: 0.25, planDate: "", planAmount: 103125, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-011", projectName: "Insurance Spares for Melamine", poNumber: "", milestone: "FAT", milestonePct: 1.0, planDate: "", planAmount: 50000, actualDate: "", invoiceNo: "", actualAmount: 0 },
 ];
 
 const SAMPLE_TRANSFERS = [
-  { id: "TRF-001", date: "2025-03-15", fromProject: "PRJ-004", toProject: "PRJ-001", reason: "Additional compressor parts required", amount: 200000, approvedBy: "Department Head", approvalDate: "2025-03-16", status: "Approved" },
-  { id: "TRF-002", date: "2025-04-20", fromProject: "PRJ-004", toProject: "PRJ-003", reason: "DCS scope expansion", amount: 150000, approvedBy: "Department Head", approvalDate: "2025-04-22", status: "Approved" },
-  { id: "TRF-003", date: "2025-05-10", fromProject: "PRJ-005", toProject: "PRJ-002", reason: "Prilling tower additional works", amount: 50000, approvedBy: "Budget Controller", approvalDate: "2025-05-12", status: "Approved" },
+  { id: "TRF-001", date: "2025-03-15", fromProject: "PRJ-000", toProject: "PRJ-001", reason: "Additional compressor parts required", amount: 0, approvedBy: "Department Head", approvalDate: "2025-03-16", status: "Approved", remarks: "Urgent requirement" },
 ];
 
-const SAMPLE_PLAN_UTILIZATION = [
-  { entryNo: 1, projectId: "PRJ-001", date: "2025-01-15", description: "Compressor parts procurement", plannedAmount: 800000 },
-  { entryNo: 2, projectId: "PRJ-001", date: "2025-02-15", description: "Installation Phase 1", plannedAmount: 400000 },
-  { entryNo: 3, projectId: "PRJ-002", date: "2025-02-20", description: "Prilling equipment order", plannedAmount: 750000 },
-  { entryNo: 4, projectId: "PRJ-003", date: "2025-03-15", description: "DCS hardware procurement", plannedAmount: 1200000 },
-  { entryNo: 5, projectId: "PRJ-001", date: "2025-03-20", description: "Compressor parts - Phase 2", plannedAmount: 600000 },
-  { entryNo: 6, projectId: "PRJ-003", date: "2025-04-15", description: "Software licenses", plannedAmount: 500000 },
-  { entryNo: 7, projectId: "PRJ-005", date: "2025-05-10", description: "Safety valve procurement", plannedAmount: 350000 },
+const SAMPLE_BUDGET_SURRENDER = [
+  { no: 1, id: "PRJ-001", name: "ABB LV Switchboard Retrofit", wbs: "P.220080001.03.0303", budgetVariance: 238513.16 },
+  { no: 2, id: "PRJ-008", name: "E-19-03A HEX Replacement", wbs: "P.250080001.03.0209", budgetVariance: 895000 },
+  { no: 3, id: "PRJ-012", name: "K-11-01 Rotor Inspection and Refurbishment", wbs: "P.240080001.03.0203", budgetVariance: 470000 },
+  { no: 4, id: "PRJ-013", name: "K-12-01 HP Rotor Inspection and Refurbishment", wbs: "P.240080001.03.0204", budgetVariance: 470000 },
+  { no: 5, id: "PRJ-014", name: "K-12-01 LP Rotor Inspection and Refurbishment", wbs: "P.240080001.03.0205", budgetVariance: 440000 },
+  { no: 6, id: "PRJ-018", name: "Procurement of Material Handling Equipment for HP reactor R-42-01", wbs: "P.250080001.03.0501", budgetVariance: 1412500 },
+  { no: 7, id: "PRJ-023", name: "Shiploader Rejuvenation", wbs: "P.240080001.02.0302", budgetVariance: 1559039 },
+  { no: 8, id: "PRJ-011", name: "Insurance Spares for Melamine", wbs: "P.250080001.03.0220", budgetVariance: 3578860 },
 ];
 
-const SAMPLE_MILESTONES = [
-  { projectId: "PRJ-001", milestoneId: "MS-001-01", description: "Mobilization", percentage: 0.10, plannedDate: "2025-01-15", actualDate: "2025-01-20", status: "Paid" },
-  { projectId: "PRJ-001", milestoneId: "MS-001-02", description: "Equipment Delivery", percentage: 0.30, plannedDate: "2025-02-28", actualDate: "2025-03-05", status: "Paid" },
-  { projectId: "PRJ-001", milestoneId: "MS-001-03", description: "Installation Complete", percentage: 0.40, plannedDate: "2025-05-15", actualDate: null, status: "Not Completed" },
-  { projectId: "PRJ-001", milestoneId: "MS-001-04", description: "Commissioning & Handover", percentage: 0.20, plannedDate: "2025-06-30", actualDate: null, status: "Not Completed" },
-  { projectId: "PRJ-002", milestoneId: "MS-002-01", description: "Engineering Approval", percentage: 0.15, plannedDate: "2025-03-15", actualDate: "2025-03-20", status: "Paid" },
-  { projectId: "PRJ-002", milestoneId: "MS-002-02", description: "Equipment Delivery", percentage: 0.35, plannedDate: "2025-05-31", actualDate: null, status: "Not Completed" },
-  { projectId: "PRJ-003", milestoneId: "MS-003-01", description: "Design Approval", percentage: 0.10, plannedDate: "2025-04-30", actualDate: "2025-05-05", status: "Paid" },
-  { projectId: "PRJ-005", milestoneId: "MS-005-01", description: "Valve Delivery", percentage: 0.40, plannedDate: "2025-05-31", actualDate: "2025-06-05", status: "Paid" },
-];
-
-const SAMPLE_ACTUAL_PAYMENTS = [
-  { paymentNo: 1, projectId: "PRJ-001", milestoneId: "MS-001-01", paymentDate: "2025-01-20", invoiceNo: "INV-001-001", invoiceAmount: 320000, amountPaid: 320000, status: "Fully Paid" },
-  { paymentNo: 2, projectId: "PRJ-001", milestoneId: "MS-001-02", paymentDate: "2025-03-05", invoiceNo: "INV-001-002", invoiceAmount: 960000, amountPaid: 960000, status: "Fully Paid" },
-  { paymentNo: 3, projectId: "PRJ-002", milestoneId: "MS-002-01", paymentDate: "2025-03-20", invoiceNo: "INV-002-001", invoiceAmount: 375000, amountPaid: 375000, status: "Fully Paid" },
-  { paymentNo: 4, projectId: "PRJ-003", milestoneId: "MS-003-01", paymentDate: "2025-05-05", invoiceNo: "INV-003-001", invoiceAmount: 400000, amountPaid: 400000, status: "Fully Paid" },
-  { paymentNo: 5, projectId: "PRJ-005", milestoneId: "MS-005-01", paymentDate: "2025-06-05", invoiceNo: "INV-005-001", invoiceAmount: 360000, amountPaid: 360000, status: "Fully Paid" },
+const SAMPLE_BUDGET_REALLOCATION = [
+  { no: 1, id: "PRJ-030", name: "Replacement of Alarm Management System (AMS)", wbs: "P.240080001.03.0208", budgetVariance: -100000 },
+  { no: 2, id: "PRJ-031", name: "Rejuvenation HVAC of PDF & UET (BUSH)", wbs: "P.250080001.03.0230", budgetVariance: -193000 },
+  { no: 3, id: "PRJ-032", name: "Walkie Talkie License and System Upgrade", wbs: "P.250080001.03.0504", budgetVariance: -150010.56 },
+  { no: 4, id: "PRJ-033", name: "K-19-01 HP DE DGS Refurbishment", wbs: "", budgetVariance: -650000 },
+  { no: 5, id: "PRJ-034", name: "K-62-01A/B Compressor Replacement", wbs: "", budgetVariance: -200000 },
+  { no: 6, id: "PRJ-035", name: "Instrument Calibration Tools to Cater Melamine Plant Equipment", wbs: "P.250080001.03.0502", budgetVariance: -200000 },
+  { no: 7, id: "PRJ-036", name: "Structure Integrity Management System (SIMS) Rejuvenation (PDF, UET, Granulation) - Phase 1", wbs: "", budgetVariance: -2000000 },
+  { no: 8, id: "PRJ-037", name: "Piping & Insulation Rejuvenation and Life Extension (PIREL) - Phase 1", wbs: "", budgetVariance: -2000000 },
 ];
 
 function formatMYR(n) {
@@ -99,8 +151,8 @@ function formatDate(d) {
 function getStatusColor(status) {
   const s = (status || "").toLowerCase();
   if (s === "active" || s === "approved" || s === "paid" || s === "fully paid" || s === "healthy") return PETRONAS.emerald;
-  if (s === "planning" || s === "pending" || s === "partial" || s === "caution") return PETRONAS.yellow;
-  if (s === "critical" || s === "overrun" || s === "rejected" || s === "overdue") return PETRONAS.red;
+  if (s === "planning" || s === "pending" || s === "partial" || s === "caution" || s === "planned") return PETRONAS.yellow;
+  if (s === "critical" || s === "overrun" || s === "rejected" || s === "overdue" || s === "behind") return PETRONAS.red;
   if (s === "completed" || s === "not completed") return PETRONAS.blue;
   return PETRONAS.gray;
 }
@@ -113,29 +165,40 @@ function getPriorityColor(priority) {
   return PETRONAS.gray;
 }
 
+function getDisciplineColor(discipline) {
+  const d = (discipline || "").toLowerCase();
+  if (d === "electrical") return PETRONAS.blue;
+  if (d === "mechanical") return PETRONAS.emerald;
+  if (d === "instrument") return PETRONAS.purple;
+  if (d === "rotating") return PETRONAS.yellow;
+  if (d === "ta") return PETRONAS.red;
+  if (d === "melamine") return PETRONAS.lime;
+  return PETRONAS.gray;
+}
+
 export default function CapexDashboard() {
   const [department, setDepartment] = useState(SAMPLE_DEPARTMENT);
   const [projects, setProjects] = useState(SAMPLE_PROJECTS);
+  const [utilization, setUtilization] = useState(SAMPLE_UTILIZATION);
   const [transfers, setTransfers] = useState(SAMPLE_TRANSFERS);
-  const [planUtilization, setPlanUtilization] = useState(SAMPLE_PLAN_UTILIZATION);
-  const [milestones, setMilestones] = useState(SAMPLE_MILESTONES);
-  const [actualPayments, setActualPayments] = useState(SAMPLE_ACTUAL_PAYMENTS);
+  const [budgetSurrender, setBudgetSurrender] = useState(SAMPLE_BUDGET_SURRENDER);
+  const [budgetReallocation, setBudgetReallocation] = useState(SAMPLE_BUDGET_REALLOCATION);
 
   const [activeTab, setActiveTab] = useState("overview");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [priorityFilter, setPriorityFilter] = useState("ALL");
+  const [disciplineFilter, setDisciplineFilter] = useState("ALL");
   const [query, setQuery] = useState("");
 
-  // Calculate totals
   const totals = useMemo(() => {
     const originalBudget = projects.reduce((s, p) => s + (p.originalBudget || 0), 0);
     const transferIn = projects.reduce((s, p) => s + (p.transferIn || 0), 0);
     const transferOut = projects.reduce((s, p) => s + (p.transferOut || 0), 0);
     const currentBudget = projects.reduce((s, p) => s + (p.currentBudget || 0), 0);
     const contractValue = projects.reduce((s, p) => s + (p.contractValue || 0), 0);
-    const planTotal = planUtilization.reduce((s, p) => s + (p.plannedAmount || 0), 0);
-    const actualTotal = actualPayments.reduce((s, p) => s + (p.amountPaid || 0), 0);
-    const outstanding = contractValue - actualTotal;
+    const planTotal = utilization.reduce((s, u) => s + (u.planAmount || 0), 0);
+    const actualTotal = utilization.reduce((s, u) => s + (u.actualAmount || 0), 0);
+    const outstanding = currentBudget - actualTotal;
 
     return {
       originalBudget,
@@ -149,20 +212,21 @@ export default function CapexDashboard() {
       outstanding,
       planUtilPct: currentBudget > 0 ? planTotal / currentBudget : 0,
       actualUtilPct: currentBudget > 0 ? actualTotal / currentBudget : 0,
-      paymentPct: contractValue > 0 ? actualTotal / contractValue : 0,
+      paymentPct: currentBudget > 0 ? actualTotal / currentBudget : 0,
       budgetVariance: currentBudget - planTotal,
+      activeProjects: projects.filter(p => p.status === "Active").length,
+      totalProjects: projects.length,
     };
-  }, [projects, planUtilization, actualPayments]);
+  }, [projects, utilization]);
 
-  // Filter projects
   const filteredProjects = useMemo(() => projects.filter(p => {
     const matchQ = !query || p.name.toLowerCase().includes(query.toLowerCase()) || p.id.toLowerCase().includes(query.toLowerCase());
     const matchS = statusFilter === "ALL" || p.status === statusFilter;
     const matchP = priorityFilter === "ALL" || p.priority === priorityFilter;
-    return matchQ && matchS && matchP;
-  }), [projects, query, statusFilter, priorityFilter]);
+    const matchD = disciplineFilter === "ALL" || p.discipline === disciplineFilter;
+    return matchQ && matchS && matchP && matchD;
+  }), [projects, query, statusFilter, priorityFilter, disciplineFilter]);
 
-  // Status options
   const statusOptions = useMemo(() => {
     const s = new Set(["ALL"]);
     projects.forEach(p => s.add(p.status));
@@ -175,71 +239,85 @@ export default function CapexDashboard() {
     return Array.from(s);
   }, [projects]);
 
-  // Chart data
-  const projectBudgetData = useMemo(() =>
-    filteredProjects.map(p => ({
-      name: p.name.length > 20 ? p.name.slice(0, 20) + "..." : p.name,
-      "Original Budget": p.originalBudget,
-      "Current Budget": p.currentBudget,
-      "Contract Value": p.contractValue,
-    }))
-  , [filteredProjects]);
+  const disciplineOptions = useMemo(() => {
+    const s = new Set(["ALL"]);
+    projects.forEach(p => { if (p.discipline) s.add(p.discipline); });
+    return Array.from(s);
+  }, [projects]);
 
-  const utilizationByProject = useMemo(() => {
-    const projectPlans = {};
-    const projectActuals = {};
-
-    planUtilization.forEach(p => {
-      projectPlans[p.projectId] = (projectPlans[p.projectId] || 0) + p.plannedAmount;
+  // Chart: budget by discipline
+  const budgetByDiscipline = useMemo(() => {
+    const byDisc = {};
+    projects.forEach(p => {
+      const d = p.discipline || "Other";
+      if (!byDisc[d]) byDisc[d] = { originalBudget: 0, contractValue: 0, planUtil: 0 };
+      byDisc[d].originalBudget += p.originalBudget || 0;
+      byDisc[d].contractValue += p.contractValue || 0;
     });
-    actualPayments.forEach(p => {
-      projectActuals[p.projectId] = (projectActuals[p.projectId] || 0) + p.amountPaid;
+    // add plan util per discipline
+    utilization.forEach(u => {
+      const proj = projects.find(p => p.id === u.projectId);
+      const d = proj?.discipline || "Other";
+      if (byDisc[d]) byDisc[d].planUtil += u.planAmount || 0;
     });
+    return Object.entries(byDisc).map(([name, v]) => ({
+      name,
+      "Original Budget": v.originalBudget,
+      "Contract Value": v.contractValue,
+      "Plan Utilization": v.planUtil,
+    })).sort((a, b) => b["Original Budget"] - a["Original Budget"]);
+  }, [projects, utilization]);
 
-    return filteredProjects.map(p => ({
-      name: p.name.length > 15 ? p.name.slice(0, 15) + "..." : p.name,
-      "Planned": projectPlans[p.id] || 0,
-      "Actual": projectActuals[p.id] || 0,
-      "Budget": p.currentBudget,
-    }));
-  }, [filteredProjects, planUtilization, actualPayments]);
+  // Chart: top projects by budget
+  const topProjectsBudget = useMemo(() => {
+    return [...filteredProjects]
+      .filter(p => p.originalBudget > 0)
+      .sort((a, b) => b.originalBudget - a.originalBudget)
+      .slice(0, 10)
+      .map(p => ({
+        name: p.name.length > 25 ? p.name.slice(0, 25) + "..." : p.name,
+        "Original Budget": p.originalBudget,
+        "Contract Value": p.contractValue,
+      }));
+  }, [filteredProjects]);
+
+  // Plan utilization by project
+  const planByProject = useMemo(() => {
+    const byProj = {};
+    utilization.forEach(u => {
+      if (!byProj[u.projectId]) byProj[u.projectId] = { plan: 0, actual: 0, name: u.projectName };
+      byProj[u.projectId].plan += u.planAmount || 0;
+      byProj[u.projectId].actual += u.actualAmount || 0;
+    });
+    return Object.entries(byProj)
+      .map(([id, v]) => ({ name: v.name.length > 20 ? v.name.slice(0, 20) + "..." : v.name, "Plan": v.plan, "Actual": v.actual }))
+      .sort((a, b) => b.Plan - a.Plan);
+  }, [utilization]);
 
   const statusDistribution = useMemo(() => {
     const counts = {};
-    projects.forEach(p => {
-      counts[p.status] = (counts[p.status] || 0) + 1;
-    });
-    return Object.entries(counts).map(([status, count]) => ({ name: status, value: count }));
+    projects.forEach(p => { counts[p.status] = (counts[p.status] || 0) + 1; });
+    return Object.entries(counts).map(([name, value]) => ({ name, value }));
   }, [projects]);
 
-  const priorityDistribution = useMemo(() => {
+  const disciplineDistribution = useMemo(() => {
     const counts = {};
     projects.forEach(p => {
-      counts[p.priority] = (counts[p.priority] || 0) + 1;
+      const d = p.discipline || "Other";
+      counts[d] = (counts[d] || 0) + 1;
     });
-    return Object.entries(counts).map(([priority, value]) => ({ name: priority, value }));
+    return Object.entries(counts).map(([name, value]) => ({ name, value }));
   }, [projects]);
 
-  const milestoneProgress = useMemo(() => {
-    const byProject = {};
-    milestones.forEach(m => {
-      if (!byProject[m.projectId]) byProject[m.projectId] = { total: 0, completed: 0, paid: 0 };
-      byProject[m.projectId].total++;
-      if (m.status === "Paid") byProject[m.projectId].paid++;
-      else if (m.actualDate) byProject[m.projectId].completed++;
+  // Utilization status summary
+  const utilizationStatus = useMemo(() => {
+    const overrun = projects.filter(p => {
+      const planUtil = utilization.filter(u => u.projectId === p.id).reduce((s, u) => s + (u.planAmount || 0), 0);
+      return p.currentBudget > 0 && planUtil > p.currentBudget;
     });
-    return filteredProjects.map(p => {
-      const data = byProject[p.id] || { total: 0, completed: 0, paid: 0 };
-      return {
-        name: p.name.length > 15 ? p.name.slice(0, 15) + "..." : p.name,
-        "Paid": data.paid,
-        "Completed": data.completed,
-        "Pending": data.total - data.paid - data.completed,
-      };
-    }).filter(d => d.Paid + d.Completed + d.Pending > 0);
-  }, [filteredProjects, milestones]);
+    return { overrunCount: overrun.length, overrunProjects: overrun };
+  }, [projects, utilization]);
 
-  // Excel file handler
   function handleFile(e) {
     const f = e.target.files?.[0];
     if (!f) return;
@@ -248,14 +326,11 @@ export default function CapexDashboard() {
       try {
         const wb = XLSX.read(evt.target.result, { type: "binary" });
 
-        // Parse Department_Info
         if (wb.SheetNames.includes("Department_Info")) {
           const ws = wb.Sheets["Department_Info"];
           const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
           const info = {};
-          rows.slice(1).forEach(r => {
-            if (r[0] && r[1]) info[r[0]] = r[1];
-          });
+          rows.slice(1).forEach(r => { if (r[0] && r[1]) info[r[0]] = r[1]; });
           setDepartment({
             name: info["Department Name"] || "",
             costCenter: info["Cost Center"] || "",
@@ -268,32 +343,48 @@ export default function CapexDashboard() {
           });
         }
 
-        // Parse Project_Master
         if (wb.SheetNames.includes("Project_Master")) {
           const ws = wb.Sheets["Project_Master"];
           const rows = XLSX.utils.sheet_to_json(ws);
           const parsed = rows.filter(r => r["Project ID"] && !String(r["Project ID"]).includes("TOTAL")).map(r => ({
             id: r["Project ID"],
-            name: r["Project Name"],
-            costCenter: r["Cost Center"],
+            name: r["Project Name"] || "",
+            wbs: r["WBS Number"] || "",
+            projectManager: r["Project Manager"] || "",
+            discipline: r["Discipline"] || "",
             originalBudget: parseFloat(r["Original Budget"]) || 0,
             contractValue: parseFloat(r["Contract Value"]) || 0,
             transferIn: parseFloat(r["Budget Transfer In"]) || 0,
             transferOut: parseFloat(r["Budget Transfer Out"]) || 0,
             currentBudget: parseFloat(r["Current Budget"]) || 0,
+            budgetVariance: parseFloat(r["Budget Variance"]) || 0,
             startDate: r["Start Date"] ? formatDate(r["Start Date"]) : "",
             endDate: r["End Date"] ? formatDate(r["End Date"]) : "",
-            projectManager: r["Project Manager"] || "",
-            vendor: r["Vendor/Contractor"] || "",
-            paymentTerms: r["Payment Terms"] || "",
-            status: r["Project Status"] || "Unknown",
+            status: r["Project Status"] || "Planning",
             priority: r["Priority"] || "Medium",
             remarks: r["Remarks"] || "",
           }));
           if (parsed.length) setProjects(parsed);
         }
 
-        // Parse Budget_Transfers
+        if (wb.SheetNames.includes("Utilization")) {
+          const ws = wb.Sheets["Utilization"];
+          const rows = XLSX.utils.sheet_to_json(ws);
+          const parsed = rows.filter(r => r["Project ID"]).map(r => ({
+            projectId: r["Project ID"],
+            projectName: r["Project Name"] || "",
+            poNumber: r["PO Number/ID"] || "",
+            milestone: r["Milestone Description"] || "",
+            milestonePct: parseFloat(r["Milestone (%)"]) || 0,
+            planDate: r["Plan Date"] ? formatDate(r["Plan Date"]) : "",
+            planAmount: parseFloat(r["Plan Amount"]) || 0,
+            actualDate: r["Actual Date"] ? formatDate(r["Actual Date"]) : "",
+            invoiceNo: r["Invoice No"] || "",
+            actualAmount: parseFloat(r["Actual Amount"]) || 0,
+          }));
+          if (parsed.length) setUtilization(parsed);
+        }
+
         if (wb.SheetNames.includes("Budget_Transfers")) {
           const ws = wb.Sheets["Budget_Transfers"];
           const rows = XLSX.utils.sheet_to_json(ws);
@@ -311,54 +402,6 @@ export default function CapexDashboard() {
           }));
           setTransfers(parsed);
         }
-
-        // Parse Plan_Utilization
-        if (wb.SheetNames.includes("Plan_Utilization")) {
-          const ws = wb.Sheets["Plan_Utilization"];
-          const rows = XLSX.utils.sheet_to_json(ws);
-          const parsed = rows.filter(r => r["Entry No"]).map(r => ({
-            entryNo: r["Entry No"],
-            projectId: r["Project ID"],
-            date: r["Date"] ? formatDate(r["Date"]) : "",
-            description: r["Description"] || "",
-            plannedAmount: parseFloat(r["Planned Amount"]) || 0,
-          }));
-          if (parsed.length) setPlanUtilization(parsed);
-        }
-
-        // Parse Payment_Milestones
-        if (wb.SheetNames.includes("Payment_Milestones")) {
-          const ws = wb.Sheets["Payment_Milestones"];
-          const rows = XLSX.utils.sheet_to_json(ws);
-          const parsed = rows.filter(r => r["Project ID"] && r["Milestone ID"]).map(r => ({
-            projectId: r["Project ID"],
-            milestoneId: r["Milestone ID"],
-            description: r["Milestone Description"] || "",
-            percentage: parseFloat(r["Milestone %"]) || 0,
-            plannedDate: r["Planned Date"] ? formatDate(r["Planned Date"]) : "",
-            actualDate: r["Actual Date"] ? formatDate(r["Actual Date"]) : null,
-            status: r["Milestone Status"] || "Not Completed",
-          }));
-          if (parsed.length) setMilestones(parsed);
-        }
-
-        // Parse Actual_Utilization
-        if (wb.SheetNames.includes("Actual_Utilization")) {
-          const ws = wb.Sheets["Actual_Utilization"];
-          const rows = XLSX.utils.sheet_to_json(ws);
-          const parsed = rows.filter(r => r["Payment No"]).map(r => ({
-            paymentNo: r["Payment No"],
-            projectId: r["Project ID"],
-            milestoneId: r["Milestone ID"],
-            paymentDate: r["Payment Date"] ? formatDate(r["Payment Date"]) : "",
-            invoiceNo: r["Invoice Number"] || "",
-            invoiceAmount: parseFloat(r["Invoice Amount"]) || 0,
-            amountPaid: parseFloat(r["Amount Paid"]) || 0,
-            status: r["Payment Status"] || "Pending",
-            remarks: r["Remarks"] || "",
-          }));
-          if (parsed.length) setActualPayments(parsed);
-        }
       } catch (err) {
         console.error("Error parsing Excel:", err);
       }
@@ -370,9 +413,7 @@ export default function CapexDashboard() {
     { id: "overview", label: "Overview" },
     { id: "projects", label: "Projects" },
     { id: "transfers", label: "Budget Transfers" },
-    { id: "utilization", label: "Utilization" },
-    { id: "milestones", label: "Milestones" },
-    { id: "payments", label: "Payments" },
+    { id: "optimization", label: "Budget Optimization" },
   ];
 
   return (
@@ -381,7 +422,10 @@ export default function CapexDashboard() {
         {/* Header */}
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 bg-white rounded-xl p-4 shadow">
           <div>
-            <h1 className="text-xl font-bold text-gray-800">Maintenance CAPEX Dashboard</h1>
+            <h1 className="text-xl font-bold text-gray-800">MAINTENANCE CAPEX DASHBOARD</h1>
+            <div className="mt-1 flex flex-wrap gap-4 text-xs text-gray-500">
+              <span>Fiscal Year: <strong>{department.fiscalYear}</strong></span>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs text-gray-400">Last Updated: {department.lastUpdated}</span>
@@ -399,9 +443,7 @@ export default function CapexDashboard() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                activeTab === tab.id
-                  ? "bg-emerald-600 text-white"
-                  : "text-gray-600 hover:bg-gray-100"
+                activeTab === tab.id ? "text-white" : "text-gray-600 hover:bg-gray-100"
               }`}
               style={activeTab === tab.id ? { backgroundColor: PETRONAS.emerald } : {}}
             >
@@ -431,10 +473,36 @@ export default function CapexDashboard() {
               ))}
             </div>
 
+            {/* Summary Cards */}
+            <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="rounded-xl border bg-white p-4 shadow">
+                <div className="text-xs text-gray-500">Total Projects</div>
+                <div className="text-2xl font-bold">{totals.totalProjects}</div>
+              </div>
+              <div className="rounded-xl border bg-white p-4 shadow">
+                <div className="text-xs text-gray-500">Active Projects</div>
+                <div className="text-2xl font-bold" style={{ color: PETRONAS.emerald }}>{totals.activeProjects}</div>
+              </div>
+              <div className="rounded-xl border bg-white p-4 shadow">
+                <div className="text-xs text-gray-500">Plan Utilization %</div>
+                <div className="text-2xl font-bold" style={{ color: totals.planUtilPct > 0.9 ? PETRONAS.red : PETRONAS.purple }}>{formatPct(totals.planUtilPct)}</div>
+                <div className="text-xs" style={{ color: getStatusColor(totals.planUtilPct > 0.9 ? "overrun" : "healthy") }}>
+                  {totals.planUtilPct > 0.9 ? "Overrun" : "Healthy"}
+                </div>
+              </div>
+              <div className="rounded-xl border bg-white p-4 shadow">
+                <div className="text-xs text-gray-500">Payment Completion %</div>
+                <div className="text-2xl font-bold" style={{ color: totals.paymentPct === 0 ? PETRONAS.red : PETRONAS.emerald }}>{formatPct(totals.paymentPct)}</div>
+                <div className="text-xs" style={{ color: getStatusColor(totals.paymentPct === 0 ? "behind" : "healthy") }}>
+                  {totals.paymentPct === 0 ? "Behind" : "On Track"}
+                </div>
+              </div>
+            </div>
+
             {/* Progress Bars */}
             <div className="mb-4 grid gap-4 lg:grid-cols-2">
               <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-sm font-medium mb-3">Plan vs Actual Utilization</div>
+                <div className="text-sm font-medium mb-3">Utilization & Payment Progress</div>
                 <div className="space-y-3">
                   <div>
                     <div className="flex justify-between text-xs mb-1">
@@ -467,6 +535,63 @@ export default function CapexDashboard() {
               </div>
 
               <div className="rounded-xl border bg-white p-4 shadow">
+                <div className="text-sm font-medium mb-3">Project Distribution by Discipline</div>
+                <div className="h-48">
+                  <ResponsiveContainer>
+                    <PieChart>
+                      <Pie data={disciplineDistribution} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} label={({ name, value }) => `${name}: ${value}`}>
+                        {disciplineDistribution.map((entry, i) => (
+                          <Cell key={i} fill={getDisciplineColor(entry.name)} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
+
+            {/* Charts */}
+            <div className="mb-4 grid gap-4 lg:grid-cols-2">
+              <div className="rounded-xl border bg-white p-4 shadow">
+                <div className="text-sm font-medium mb-3">Budget by Discipline</div>
+                <div className="h-64">
+                  <ResponsiveContainer>
+                    <BarChart data={budgetByDiscipline} layout="vertical" margin={{ left: 10, right: 10 }}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis type="number" tickFormatter={v => v >= 1e6 ? (v/1e6).toFixed(1) + "M" : (v/1e3).toFixed(0) + "k"} />
+                      <YAxis type="category" dataKey="name" width={90} tick={{ fontSize: 10 }} />
+                      <Tooltip formatter={v => formatMYR(v)} />
+                      <Legend />
+                      <Bar dataKey="Original Budget" fill={PETRONAS.gray} />
+                      <Bar dataKey="Contract Value" fill={PETRONAS.blue} />
+                      <Bar dataKey="Plan Utilization" fill={PETRONAS.purple} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              <div className="rounded-xl border bg-white p-4 shadow">
+                <div className="text-sm font-medium mb-3">Top 10 Projects by Budget</div>
+                <div className="h-64">
+                  <ResponsiveContainer>
+                    <BarChart data={topProjectsBudget} layout="vertical" margin={{ left: 10, right: 10 }}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis type="number" tickFormatter={v => v >= 1e6 ? (v/1e6).toFixed(1) + "M" : (v/1e3).toFixed(0) + "k"} />
+                      <YAxis type="category" dataKey="name" width={150} tick={{ fontSize: 9 }} />
+                      <Tooltip formatter={v => formatMYR(v)} />
+                      <Legend />
+                      <Bar dataKey="Original Budget" fill={PETRONAS.gray} />
+                      <Bar dataKey="Contract Value" fill={PETRONAS.emerald} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
+
+            {/* Project Status Pie + Plan vs Actual */}
+            <div className="mb-4 grid gap-4 lg:grid-cols-2">
+              <div className="rounded-xl border bg-white p-4 shadow">
                 <div className="text-sm font-medium mb-3">Project Status Distribution</div>
                 <div className="h-48">
                   <ResponsiveContainer>
@@ -481,39 +606,18 @@ export default function CapexDashboard() {
                   </ResponsiveContainer>
                 </div>
               </div>
-            </div>
-
-            {/* Charts */}
-            <div className="mb-4 grid gap-4 lg:grid-cols-2">
-              <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-sm font-medium mb-3">Budget by Project</div>
-                <div className="h-64">
-                  <ResponsiveContainer>
-                    <BarChart data={projectBudgetData} layout="vertical" margin={{ left: 10, right: 10 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis type="number" tickFormatter={v => v >= 1e6 ? (v/1e6).toFixed(1) + "M" : (v/1e3).toFixed(0) + "k"} />
-                      <YAxis type="category" dataKey="name" width={120} tick={{ fontSize: 10 }} />
-                      <Tooltip formatter={v => formatMYR(v)} />
-                      <Legend />
-                      <Bar dataKey="Original Budget" fill={PETRONAS.gray} />
-                      <Bar dataKey="Current Budget" fill={PETRONAS.blue} />
-                      <Bar dataKey="Contract Value" fill={PETRONAS.emerald} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
 
               <div className="rounded-xl border bg-white p-4 shadow">
                 <div className="text-sm font-medium mb-3">Plan vs Actual by Project</div>
-                <div className="h-64">
+                <div className="h-48">
                   <ResponsiveContainer>
-                    <BarChart data={utilizationByProject} layout="vertical" margin={{ left: 10, right: 10 }}>
+                    <BarChart data={planByProject.slice(0, 8)} layout="vertical" margin={{ left: 10, right: 10 }}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis type="number" tickFormatter={v => v >= 1e6 ? (v/1e6).toFixed(1) + "M" : (v/1e3).toFixed(0) + "k"} />
-                      <YAxis type="category" dataKey="name" width={100} tick={{ fontSize: 10 }} />
+                      <YAxis type="category" dataKey="name" width={130} tick={{ fontSize: 9 }} />
                       <Tooltip formatter={v => formatMYR(v)} />
                       <Legend />
-                      <Bar dataKey="Planned" fill={PETRONAS.purple} />
+                      <Bar dataKey="Plan" fill={PETRONAS.purple} />
                       <Bar dataKey="Actual" fill={PETRONAS.emerald} />
                     </BarChart>
                   </ResponsiveContainer>
@@ -521,22 +625,55 @@ export default function CapexDashboard() {
               </div>
             </div>
 
-            {/* Milestone Progress */}
-            <div className="rounded-xl border bg-white p-4 shadow">
-              <div className="text-sm font-medium mb-3">Milestone Progress by Project</div>
-              <div className="h-48">
-                <ResponsiveContainer>
-                  <BarChart data={milestoneProgress} layout="vertical" margin={{ left: 10, right: 10 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis type="number" />
-                    <YAxis type="category" dataKey="name" width={100} tick={{ fontSize: 10 }} />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="Paid" stackId="a" fill={PETRONAS.emerald} />
-                    <Bar dataKey="Completed" stackId="a" fill={PETRONAS.yellow} />
-                    <Bar dataKey="Pending" stackId="a" fill={PETRONAS.gray} />
-                  </BarChart>
-                </ResponsiveContainer>
+            {/* Project-Level Breakdown Table */}
+            <div className="rounded-xl border bg-white shadow overflow-hidden">
+              <div className="p-4 border-b bg-gray-50">
+                <div className="text-sm font-medium">PROJECT-LEVEL BREAKDOWN</div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b bg-gray-50 text-left text-gray-600">
+                      <th className="p-2">Project ID</th>
+                      <th className="p-2">Project Name</th>
+                      <th className="p-2">Discipline</th>
+                      <th className="p-2 text-right">Original Budget</th>
+                      <th className="p-2 text-right">Current Budget</th>
+                      <th className="p-2 text-right">Plan Util</th>
+                      <th className="p-2 text-right">Actual Paid</th>
+                      <th className="p-2 text-right">Plan %</th>
+                      <th className="p-2 text-right">Actual %</th>
+                      <th className="p-2">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredProjects.filter(p => p.originalBudget > 0).map((p, i) => {
+                      const planUtil = utilization.filter(u => u.projectId === p.id).reduce((s, u) => s + (u.planAmount || 0), 0);
+                      const actualUtil = utilization.filter(u => u.projectId === p.id).reduce((s, u) => s + (u.actualAmount || 0), 0);
+                      const planPct = p.currentBudget > 0 ? planUtil / p.currentBudget : 0;
+                      const actualPct = p.currentBudget > 0 ? actualUtil / p.currentBudget : 0;
+                      const status = planPct > 1 ? "Overrun" : "Healthy";
+                      return (
+                        <tr key={i} className="border-b hover:bg-gray-50">
+                          <td className="p-2 font-mono">{p.id}</td>
+                          <td className="p-2 max-w-[200px] truncate">{p.name}</td>
+                          <td className="p-2">
+                            <span className="px-1.5 py-0.5 rounded text-white text-[10px]" style={{ backgroundColor: getDisciplineColor(p.discipline) }}>{p.discipline}</span>
+                          </td>
+                          <td className="p-2 text-right">{formatMYR(p.originalBudget)}</td>
+                          <td className="p-2 text-right font-medium" style={{ color: PETRONAS.blue }}>{formatMYR(p.currentBudget)}</td>
+                          <td className="p-2 text-right" style={{ color: PETRONAS.purple }}>{formatMYR(planUtil)}</td>
+                          <td className="p-2 text-right" style={{ color: PETRONAS.emerald }}>{formatMYR(actualUtil)}</td>
+                          <td className="p-2 text-right">{formatPct(planPct)}</td>
+                          <td className="p-2 text-right">{formatPct(actualPct)}</td>
+                          <td className="p-2">
+                            <span className="px-1.5 py-0.5 rounded-full text-white text-[10px]" style={{ backgroundColor: getStatusColor(status) }}>{status}</span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           </>
@@ -559,6 +696,9 @@ export default function CapexDashboard() {
               <select value={priorityFilter} onChange={e => setPriorityFilter(e.target.value)} className="rounded-lg border px-3 py-2 text-sm">
                 {priorityOptions.map(s => <option key={s} value={s}>{s === "ALL" ? "All Priority" : s}</option>)}
               </select>
+              <select value={disciplineFilter} onChange={e => setDisciplineFilter(e.target.value)} className="rounded-lg border px-3 py-2 text-sm">
+                {disciplineOptions.map(s => <option key={s} value={s}>{s === "ALL" ? "All Disciplines" : s}</option>)}
+              </select>
             </div>
 
             <div className="rounded-xl border bg-white shadow overflow-hidden">
@@ -568,39 +708,46 @@ export default function CapexDashboard() {
                     <tr className="border-b bg-gray-50 text-left text-gray-600">
                       <th className="p-3">Project ID</th>
                       <th className="p-3">Project Name</th>
+                      <th className="p-3">Discipline</th>
+                      <th className="p-3">Project Manager</th>
                       <th className="p-3 text-right">Original Budget</th>
-                      <th className="p-3 text-right">Current Budget</th>
                       <th className="p-3 text-right">Contract Value</th>
+                      <th className="p-3 text-right">Current Budget</th>
+                      <th className="p-3 text-right">Budget Variance</th>
                       <th className="p-3">Status</th>
                       <th className="p-3">Priority</th>
-                      <th className="p-3">Project Manager</th>
                       <th className="p-3">End Date</th>
+                      <th className="p-3">Remarks</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredProjects.map((p, i) => (
                       <tr key={i} className="border-b hover:bg-gray-50">
                         <td className="p-3 font-mono text-xs">{p.id}</td>
-                        <td className="p-3 font-medium">{p.name}</td>
-                        <td className="p-3 text-right">{formatMYR(p.originalBudget)}</td>
-                        <td className="p-3 text-right font-medium" style={{ color: PETRONAS.blue }}>{formatMYR(p.currentBudget)}</td>
-                        <td className="p-3 text-right">{formatMYR(p.contractValue)}</td>
+                        <td className="p-3 font-medium text-sm max-w-[250px]">{p.name}</td>
                         <td className="p-3">
-                          <span className="px-2 py-1 rounded-full text-xs font-medium text-white" style={{ backgroundColor: getStatusColor(p.status) }}>
-                            {p.status}
-                          </span>
+                          <span className="px-2 py-0.5 rounded text-white text-xs" style={{ backgroundColor: getDisciplineColor(p.discipline) }}>{p.discipline}</span>
+                        </td>
+                        <td className="p-3 text-gray-600 text-xs">{p.projectManager}</td>
+                        <td className="p-3 text-right text-xs">{formatMYR(p.originalBudget)}</td>
+                        <td className="p-3 text-right text-xs">{formatMYR(p.contractValue)}</td>
+                        <td className="p-3 text-right font-medium text-xs" style={{ color: PETRONAS.blue }}>{formatMYR(p.currentBudget)}</td>
+                        <td className="p-3 text-right text-xs" style={{ color: p.budgetVariance >= 0 ? PETRONAS.emerald : PETRONAS.red }}>{formatMYR(p.budgetVariance)}</td>
+                        <td className="p-3">
+                          <span className="px-2 py-1 rounded-full text-xs font-medium text-white" style={{ backgroundColor: getStatusColor(p.status) }}>{p.status}</span>
                         </td>
                         <td className="p-3">
-                          <span className="px-2 py-1 rounded text-xs font-medium" style={{ color: getPriorityColor(p.priority) }}>
-                            {p.priority}
-                          </span>
+                          <span className="px-2 py-1 rounded text-xs font-medium" style={{ color: getPriorityColor(p.priority) }}>{p.priority}</span>
                         </td>
-                        <td className="p-3 text-gray-600">{p.projectManager}</td>
-                        <td className="p-3 text-gray-600">{p.endDate}</td>
+                        <td className="p-3 text-gray-600 text-xs">{p.endDate || "-"}</td>
+                        <td className="p-3 text-gray-500 text-xs max-w-[150px] truncate">{p.remarks || "-"}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+              </div>
+              <div className="p-3 text-xs text-gray-500 border-t bg-gray-50">
+                Showing {filteredProjects.length} of {projects.length} projects
               </div>
             </div>
           </>
@@ -648,7 +795,9 @@ export default function CapexDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {transfers.map((t, i) => (
+                    {transfers.length === 0 ? (
+                      <tr><td colSpan="8" className="p-8 text-center text-gray-400">No budget transfers recorded</td></tr>
+                    ) : transfers.map((t, i) => (
                       <tr key={i} className="border-b hover:bg-gray-50">
                         <td className="p-3 font-mono text-xs">{t.id}</td>
                         <td className="p-3">{t.date}</td>
@@ -657,9 +806,7 @@ export default function CapexDashboard() {
                         <td className="p-3 text-right font-medium" style={{ color: PETRONAS.blue }}>{formatMYR(t.amount)}</td>
                         <td className="p-3 text-gray-600 max-w-[200px] truncate">{t.reason}</td>
                         <td className="p-3">
-                          <span className="px-2 py-1 rounded-full text-xs font-medium text-white" style={{ backgroundColor: getStatusColor(t.status) }}>
-                            {t.status}
-                          </span>
+                          <span className="px-2 py-1 rounded-full text-xs font-medium text-white" style={{ backgroundColor: getStatusColor(t.status) }}>{t.status}</span>
                         </td>
                         <td className="p-3 text-gray-600">{t.approvedBy}</td>
                       </tr>
@@ -671,187 +818,125 @@ export default function CapexDashboard() {
           </>
         )}
 
-        {/* Utilization Tab */}
-        {activeTab === "utilization" && (
+        {/* Budget Optimization Tab */}
+        {activeTab === "optimization" && (
           <>
-            <div className="mb-4 grid gap-4 lg:grid-cols-2">
-              <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-sm font-medium mb-3">Plan Utilization Summary</div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="text-xs text-gray-500">Total Planned</div>
-                    <div className="text-lg font-bold" style={{ color: PETRONAS.purple }}>{formatMYR(totals.planTotal)}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500">Budget Variance</div>
-                    <div className="text-lg font-bold" style={{ color: totals.budgetVariance >= 0 ? PETRONAS.emerald : PETRONAS.red }}>
-                      {formatMYR(totals.budgetVariance)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-sm font-medium mb-3">Actual Utilization Summary</div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="text-xs text-gray-500">Total Paid</div>
-                    <div className="text-lg font-bold" style={{ color: PETRONAS.emerald }}>{formatMYR(totals.actualTotal)}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500">Outstanding</div>
-                    <div className="text-lg font-bold" style={{ color: PETRONAS.yellow }}>{formatMYR(totals.outstanding)}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-xl border bg-white shadow overflow-hidden mb-4">
-              <div className="p-4 border-b bg-gray-50">
-                <div className="text-sm font-medium">Plan Utilization Entries</div>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b bg-gray-50 text-left text-gray-600">
-                      <th className="p-3">#</th>
-                      <th className="p-3">Project ID</th>
-                      <th className="p-3">Date</th>
-                      <th className="p-3">Description</th>
-                      <th className="p-3 text-right">Planned Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {planUtilization.map((p, i) => (
-                      <tr key={i} className="border-b hover:bg-gray-50">
-                        <td className="p-3 text-gray-400">{p.entryNo}</td>
-                        <td className="p-3 font-mono text-xs">{p.projectId}</td>
-                        <td className="p-3">{p.date}</td>
-                        <td className="p-3">{p.description}</td>
-                        <td className="p-3 text-right font-medium" style={{ color: PETRONAS.purple }}>{formatMYR(p.plannedAmount)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                  <tfoot>
-                    <tr className="bg-gray-50 font-medium">
-                      <td colSpan="4" className="p-3 text-right">Total:</td>
-                      <td className="p-3 text-right" style={{ color: PETRONAS.purple }}>{formatMYR(totals.planTotal)}</td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </>
-        )}
-
-        {/* Milestones Tab */}
-        {activeTab === "milestones" && (
-          <div className="rounded-xl border bg-white shadow overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b bg-gray-50 text-left text-gray-600">
-                    <th className="p-3">Project ID</th>
-                    <th className="p-3">Milestone ID</th>
-                    <th className="p-3">Description</th>
-                    <th className="p-3 text-right">%</th>
-                    <th className="p-3">Planned Date</th>
-                    <th className="p-3">Actual Date</th>
-                    <th className="p-3">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {milestones.map((m, i) => (
-                    <tr key={i} className="border-b hover:bg-gray-50">
-                      <td className="p-3 font-mono text-xs">{m.projectId}</td>
-                      <td className="p-3 font-mono text-xs">{m.milestoneId}</td>
-                      <td className="p-3">{m.description}</td>
-                      <td className="p-3 text-right">{formatPct(m.percentage)}</td>
-                      <td className="p-3">{m.plannedDate}</td>
-                      <td className="p-3">{m.actualDate || "-"}</td>
-                      <td className="p-3">
-                        <span className="px-2 py-1 rounded-full text-xs font-medium text-white" style={{ backgroundColor: getStatusColor(m.status) }}>
-                          {m.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* Payments Tab */}
-        {activeTab === "payments" && (
-          <>
+            {/* Summary Cards */}
             <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
               <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-xs text-gray-500">Total Payments</div>
-                <div className="text-lg font-bold">{actualPayments.length}</div>
+                <div className="text-xs text-gray-500">Total Surrender Variance</div>
+                <div className="text-lg font-bold" style={{ color: PETRONAS.emerald }}>
+                  {formatMYR(budgetSurrender.reduce((s, b) => s + b.budgetVariance, 0))}
+                </div>
               </div>
               <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-xs text-gray-500">Total Amount Paid</div>
-                <div className="text-lg font-bold" style={{ color: PETRONAS.emerald }}>{formatMYR(totals.actualTotal)}</div>
+                <div className="text-xs text-gray-500">Total Reallocation Needed</div>
+                <div className="text-lg font-bold" style={{ color: PETRONAS.red }}>
+                  {formatMYR(Math.abs(budgetReallocation.reduce((s, b) => s + b.budgetVariance, 0)))}
+                </div>
               </div>
               <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-xs text-gray-500">Contract Value</div>
-                <div className="text-lg font-bold" style={{ color: PETRONAS.blue }}>{formatMYR(totals.contractValue)}</div>
+                <div className="text-xs text-gray-500">Net Balance</div>
+                <div className="text-lg font-bold" style={{ color: PETRONAS.blue }}>
+                  {formatMYR(budgetSurrender.reduce((s, b) => s + b.budgetVariance, 0) + budgetReallocation.reduce((s, b) => s + b.budgetVariance, 0))}
+                </div>
               </div>
               <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-xs text-gray-500">Payment Completion</div>
-                <div className="text-lg font-bold" style={{ color: PETRONAS.emerald }}>{formatPct(totals.paymentPct)}</div>
+                <div className="text-xs text-gray-500">Projects Needing Budget</div>
+                <div className="text-lg font-bold" style={{ color: PETRONAS.red }}>{budgetReallocation.length}</div>
               </div>
             </div>
 
-            <div className="rounded-xl border bg-white shadow overflow-hidden">
+            {/* Budget Surrender Table */}
+            <div className="rounded-xl border bg-white shadow overflow-hidden mb-4">
+              <div className="p-4 border-b bg-gray-50">
+                <div className="text-sm font-medium">BUDGET SURRENDER (Projects with Positive Variance)</div>
+              </div>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b bg-gray-50 text-left text-gray-600">
-                      <th className="p-3">#</th>
-                      <th className="p-3">Project ID</th>
-                      <th className="p-3">Milestone ID</th>
-                      <th className="p-3">Payment Date</th>
-                      <th className="p-3">Invoice No</th>
-                      <th className="p-3 text-right">Invoice Amount</th>
-                      <th className="p-3 text-right">Amount Paid</th>
-                      <th className="p-3">Status</th>
+                      <th className="p-2">No</th>
+                      <th className="p-2">Project ID</th>
+                      <th className="p-2">Project Name</th>
+                      <th className="p-2">WBS Number</th>
+                      <th className="p-2 text-right">Budget Variance</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {actualPayments.map((p, i) => (
+                    {budgetSurrender.map((b, i) => (
                       <tr key={i} className="border-b hover:bg-gray-50">
-                        <td className="p-3 text-gray-400">{p.paymentNo}</td>
-                        <td className="p-3 font-mono text-xs">{p.projectId}</td>
-                        <td className="p-3 font-mono text-xs">{p.milestoneId}</td>
-                        <td className="p-3">{p.paymentDate}</td>
-                        <td className="p-3">{p.invoiceNo}</td>
-                        <td className="p-3 text-right">{formatMYR(p.invoiceAmount)}</td>
-                        <td className="p-3 text-right font-medium" style={{ color: PETRONAS.emerald }}>{formatMYR(p.amountPaid)}</td>
-                        <td className="p-3">
-                          <span className="px-2 py-1 rounded-full text-xs font-medium text-white" style={{ backgroundColor: getStatusColor(p.status) }}>
-                            {p.status}
-                          </span>
-                        </td>
+                        <td className="p-2">{b.no}</td>
+                        <td className="p-2 font-mono">{b.id}</td>
+                        <td className="p-2">{b.name}</td>
+                        <td className="p-2 font-mono">{b.wbs || "-"}</td>
+                        <td className="p-2 text-right font-medium" style={{ color: PETRONAS.emerald }}>{formatMYR(b.budgetVariance)}</td>
                       </tr>
                     ))}
                   </tbody>
                   <tfoot>
-                    <tr className="bg-gray-50 font-medium">
-                      <td colSpan="6" className="p-3 text-right">Total:</td>
-                      <td className="p-3 text-right" style={{ color: PETRONAS.emerald }}>{formatMYR(totals.actualTotal)}</td>
-                      <td></td>
+                    <tr className="bg-gray-50 font-medium text-xs">
+                      <td colSpan="4" className="p-2 text-right">Total Surrender:</td>
+                      <td className="p-2 text-right" style={{ color: PETRONAS.emerald }}>
+                        {formatMYR(budgetSurrender.reduce((s, b) => s + b.budgetVariance, 0))}
+                      </td>
                     </tr>
                   </tfoot>
                 </table>
               </div>
+            </div>
+
+            {/* Budget Reallocation Table */}
+            <div className="rounded-xl border bg-white shadow overflow-hidden mb-4">
+              <div className="p-4 border-b bg-gray-50">
+                <div className="text-sm font-medium">BUDGET REALLOCATION (Projects with Negative Variance)</div>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b bg-gray-50 text-left text-gray-600">
+                      <th className="p-2">No</th>
+                      <th className="p-2">Project ID</th>
+                      <th className="p-2">Project Name</th>
+                      <th className="p-2">WBS Number</th>
+                      <th className="p-2 text-right">Budget Variance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {budgetReallocation.map((b, i) => (
+                      <tr key={i} className="border-b hover:bg-gray-50">
+                        <td className="p-2">{b.no}</td>
+                        <td className="p-2 font-mono">{b.id}</td>
+                        <td className="p-2">{b.name}</td>
+                        <td className="p-2 font-mono">{b.wbs || "-"}</td>
+                        <td className="p-2 text-right font-medium" style={{ color: PETRONAS.red }}>{formatMYR(b.budgetVariance)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr className="bg-gray-50 font-medium text-xs">
+                      <td colSpan="4" className="p-2 text-right">Total Reallocation:</td>
+                      <td className="p-2 text-right" style={{ color: PETRONAS.red }}>
+                        {formatMYR(budgetReallocation.reduce((s, b) => s + b.budgetVariance, 0))}
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
+            {/* Note */}
+            <div className="rounded-xl border bg-white p-4 shadow text-xs text-gray-500">
+              <span style={{ color: PETRONAS.emerald }}>Green = Surplus (can surrender)</span>{" | "}
+              <span style={{ color: PETRONAS.red }}>Red = Deficit (needs reallocation)</span>{" | "}
+              Net Balance should be ≥ 0.
             </div>
           </>
         )}
 
         {/* Footer */}
         <div className="mt-4 text-center text-xs text-gray-400">
-          Department: {department.name} | Budget Controller: {department.budgetController} | Currency: {department.currency}
+          Department: {department.name} | Head: {department.departmentHead} | Budget Controller: {department.budgetController} | Currency: {department.currency}
         </div>
       </div>
     </div>
