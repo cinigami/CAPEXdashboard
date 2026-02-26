@@ -77,7 +77,7 @@ const SAMPLE_PROJECTS = [
 ];
 
 const SAMPLE_UTILIZATION = [
-  { projectId: "PRJ-001", projectName: "ABB LV Switchboard Retrofit", poNumber: "3400885717-04", milestone: "Progress Payment", milestonePct: 0.01, planDate: "2026-02-01", planAmount: 885.60, actualDate: "", invoiceNo: "", actualAmount: 0 },
+  { projectId: "PRJ-001", projectName: "ABB LV Switchboard Retrofit", poNumber: "3400885717-04", milestone: "Progress Payment", milestonePct: 0.01, planDate: "2026-02-01", planAmount: 885.60, actualDate: "2026-02-20", invoiceNo: "N/A", actualAmount: 885.60 },
   { projectId: "PRJ-001", projectName: "ABB LV Switchboard Retrofit", poNumber: "3400885717-05", milestone: "SAT", milestonePct: 0.10, planDate: "2026-12-01", planAmount: 94075.92, actualDate: "", invoiceNo: "", actualAmount: 0 },
   { projectId: "PRJ-001", projectName: "ABB LV Switchboard Retrofit", poNumber: "3400826255-06", milestone: "Service Completion Certificate and Final Documentation", milestonePct: 0.10, planDate: "2026-12-01", planAmount: 94075.92, actualDate: "", invoiceNo: "", actualAmount: 0 },
   { projectId: "PRJ-005", projectName: "E-13-06 Replacement of Reformed Gas Waste Heat Boiler", poNumber: "3400826255-04", milestone: "Upon Shipment Readiness", milestonePct: 0.45, planDate: "2026-12-01", planAmount: 6479550, actualDate: "", invoiceNo: "", actualAmount: 0 },
@@ -153,6 +153,22 @@ function getEndOfMonth(year, month) {
   return new Date(year, month, 0, 23, 59, 59);
 }
 
+function excelDateToString(val) {
+  if (!val) return "";
+  if (typeof val === "number") {
+    const date = new Date((val - 25569) * 86400 * 1000);
+    return date.toISOString().split("T")[0];
+  }
+  if (typeof val === "string") {
+    const dotParts = val.split(".");
+    if (dotParts.length === 3 && dotParts[2].length === 4) {
+      return `${dotParts[2]}-${dotParts[1].padStart(2, '0')}-${dotParts[0].padStart(2, '0')}`;
+    }
+    return val.split("T")[0];
+  }
+  return formatDate(val);
+}
+
 function getStatusColor(status) {
   const s = (status || "").toLowerCase();
   if (s === "active" || s === "approved" || s === "paid" || s === "fully paid" || s === "healthy") return PETRONAS.emerald;
@@ -217,6 +233,14 @@ export default function CapexDashboard() {
     });
   }, [utilization, referenceDate]);
 
+  const ytdActualUtilization = useMemo(() => {
+    return utilization.filter(u => {
+      if (!u.actualDate) return false;
+      const actualDate = new Date(u.actualDate + "T00:00:00");
+      return actualDate <= referenceDate;
+    });
+  }, [utilization, referenceDate]);
+
   const totals = useMemo(() => {
     const originalBudget = projects.reduce((s, p) => s + (p.originalBudget || 0), 0);
     const transferIn = projects.reduce((s, p) => s + (p.transferIn || 0), 0);
@@ -228,7 +252,7 @@ export default function CapexDashboard() {
     const outstanding = currentBudget - actualTotal;
 
     const ytdPlanTotal = ytdUtilization.reduce((s, u) => s + (u.planAmount || 0), 0);
-    const ytdActualTotal = ytdUtilization.reduce((s, u) => s + (u.actualAmount || 0), 0);
+    const ytdActualTotal = ytdActualUtilization.reduce((s, u) => s + (u.actualAmount || 0), 0);
 
     return {
       originalBudget,
@@ -253,7 +277,7 @@ export default function CapexDashboard() {
       ytdPlanEntries: ytdUtilization.length,
       ytdPlanExcluded: utilization.length - ytdUtilization.length,
     };
-  }, [projects, utilization, ytdUtilization]);
+  }, [projects, utilization, ytdUtilization, ytdActualUtilization]);
 
   const filteredProjects = useMemo(() => projects.filter(p => {
     const matchQ = !query || p.name.toLowerCase().includes(query.toLowerCase()) || p.id.toLowerCase().includes(query.toLowerCase());
@@ -426,20 +450,30 @@ export default function CapexDashboard() {
 
         if (wb.SheetNames.includes("Utilization")) {
           const ws = wb.Sheets["Utilization"];
-          const rows = XLSX.utils.sheet_to_json(ws);
-          const parsed = rows.filter(r => r["Project ID"]).map(r => ({
-            projectId: r["Project ID"],
-            projectName: r["Project Name"] || "",
-            poNumber: r["PO Number/ID"] || "",
-            milestone: r["Milestone Description"] || "",
-            milestonePct: parseFloat(r["Milestone (%)"]) || 0,
-            planDate: r["Plan Date"] ? formatDate(r["Plan Date"]) : "",
-            planAmount: parseFloat(r["Plan Amount"]) || 0,
-            actualDate: r["Actual Date"] ? formatDate(r["Actual Date"]) : "",
-            invoiceNo: r["Invoice No"] || "",
-            actualAmount: parseFloat(r["Actual Amount"]) || 0,
-          }));
-          if (parsed.length) setUtilization(parsed);
+          const rawRows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+          const headerIdx = rawRows.findIndex(r => r && r.includes("Project ID"));
+          if (headerIdx >= 0) {
+            const headers = rawRows[headerIdx];
+            const col = (name) => headers.indexOf(name);
+            const dataRows = rawRows.slice(headerIdx + 1);
+            const parsed = dataRows
+              .filter(r => r && r[col("Project ID")])
+              .filter(r => !String(r[col("Project ID")]).includes("TOTAL"))
+              .map(r => ({
+                projectId: r[col("Project ID")] || "",
+                projectName: r[col("Project Name")] || "",
+                poNumber: r[col("PO Number/ID")] || "",
+                milestone: r[col("Milestone Description")] || "",
+                milestonePct: parseFloat(r[col("Milestone (%)")]) || 0,
+                planDate: excelDateToString(r[col("Plan Date")]),
+                planAmount: parseFloat(r[col("Plan Amount")]) || 0,
+                actualDate: excelDateToString(r[col("Actual Date")]),
+                invoiceNo: r[col("Invoice No")] || "",
+                actualAmount: parseFloat(r[col("Actual Amount")]) || 0,
+                status: r[col("Status")] || "",
+              }));
+            if (parsed.length) setUtilization(parsed);
+          }
         }
 
         if (wb.SheetNames.includes("Budget_Transfers")) {
