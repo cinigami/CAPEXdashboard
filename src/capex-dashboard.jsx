@@ -403,6 +403,7 @@ export default function CapexDashboard() {
   function handleFile(e) {
     const f = e.target.files?.[0];
     if (!f) return;
+    const input = e.target;
     const reader = new FileReader();
     reader.onload = (evt) => {
       try {
@@ -539,6 +540,7 @@ export default function CapexDashboard() {
       } catch (err) {
         console.error("Error parsing Excel:", err);
       }
+      input.value = "";
     };
     reader.readAsBinaryString(f);
   }
