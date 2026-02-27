@@ -33,7 +33,7 @@ const SAMPLE_DEPARTMENT = {
   departmentHead: "M Fairoz B A Kahar",
   budgetController: "Siti Khadhijah Zulkafli",
   currency: "MYR",
-  lastUpdated: "2026-01-19",
+  lastUpdated: new Date().toISOString().split("T")[0],
 };
 
 const SAMPLE_PROJECTS = [
@@ -146,8 +146,19 @@ function formatPct(n) {
 
 function formatDate(d) {
   if (!d) return "-";
-  if (typeof d === "string") return d.split("T")[0];
-  return d.toISOString().split("T")[0];
+  if (typeof d === "number") {
+    const date = new Date((d - 25569) * 86400 * 1000);
+    return date.toISOString().split("T")[0];
+  }
+  if (typeof d === "string") {
+    const dotParts = d.split(".");
+    if (dotParts.length === 3 && dotParts[2].length === 4) {
+      return `${dotParts[2]}-${dotParts[1].padStart(2, '0')}-${dotParts[0].padStart(2, '0')}`;
+    }
+    return d.split("T")[0];
+  }
+  if (d instanceof Date) return d.toISOString().split("T")[0];
+  return "-";
 }
 
 function getEndOfMonth(year, month) {
@@ -499,43 +510,59 @@ export default function CapexDashboard() {
         if (wb.SheetNames.includes("Budget_Optimization")) {
           const ws = wb.Sheets["Budget_Optimization"];
           const rawRows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+          console.log("[Budget_Optimization] Total rows:", rawRows.length);
 
           // Parse Budget Surrender section
-          const surrenderHeaderIdx = rawRows.findIndex(r => r && String(r[0]).includes("BUDGET SURRENDER"));
+          const surrenderHeaderIdx = rawRows.findIndex(r => r && r[0] != null && String(r[0]).includes("BUDGET SURRENDER"));
+          console.log("[Budget_Optimization] Surrender header at row:", surrenderHeaderIdx);
           if (surrenderHeaderIdx >= 0) {
-            const colHeaders = rawRows[surrenderHeaderIdx + 1];
             const sRows = [];
             for (let i = surrenderHeaderIdx + 2; i < rawRows.length; i++) {
               const r = rawRows[i];
-              if (!r || !r[1] || String(r[0]).includes("TOTAL")) break;
+              if (!r) break;
+              const id = r[1];
+              const firstCol = r[0] != null ? String(r[0]) : "";
+              if (firstCol.includes("TOTAL")) break;
+              if (!id) break;
               sRows.push({
                 no: r[0],
-                id: r[1],
-                name: (r[2] || "").trim(),
-                wbs: r[3] || "",
+                id: String(id),
+                name: String(r[2] || "").trim(),
+                wbs: r[3] && r[3] !== 0 ? String(r[3]) : "",
                 budgetVariance: parseFloat(r[4]) || 0,
+                surrenderAmount: parseFloat(r[5]) || 0,
               });
             }
-            if (sRows.length) setBudgetSurrender(sRows);
+            console.log("[Budget_Optimization] Surrender rows parsed:", sRows.length, sRows);
+            setBudgetSurrender(sRows);
           }
 
           // Parse Budget Reallocation section
-          const reallocHeaderIdx = rawRows.findIndex(r => r && String(r[0]).includes("BUDGET REALLOCATION"));
+          const reallocHeaderIdx = rawRows.findIndex(r => r && r[0] != null && String(r[0]).includes("BUDGET REALLOCATION"));
+          console.log("[Budget_Optimization] Reallocation header at row:", reallocHeaderIdx);
           if (reallocHeaderIdx >= 0) {
             const rRows = [];
             for (let i = reallocHeaderIdx + 2; i < rawRows.length; i++) {
               const r = rawRows[i];
-              if (!r || !r[1] || String(r[0]).includes("TOTAL")) break;
+              if (!r) break;
+              const id = r[1];
+              const firstCol = r[0] != null ? String(r[0]) : "";
+              if (firstCol.includes("TOTAL")) break;
+              if (!id) break;
               rRows.push({
                 no: r[0],
-                id: r[1],
-                name: (r[2] || "").trim(),
-                wbs: r[3] || "",
+                id: String(id),
+                name: String(r[2] || "").trim(),
+                wbs: r[3] && r[3] !== 0 ? String(r[3]) : "",
                 budgetVariance: parseFloat(r[4]) || 0,
+                reallocationAmount: parseFloat(r[5]) || 0,
               });
             }
-            if (rRows.length) setBudgetReallocation(rRows);
+            console.log("[Budget_Optimization] Reallocation rows parsed:", rRows.length, rRows);
+            setBudgetReallocation(rRows);
           }
+        } else {
+          console.log("[Budget_Optimization] Sheet not found in:", wb.SheetNames);
         }
       } catch (err) {
         console.error("Error parsing Excel:", err);
