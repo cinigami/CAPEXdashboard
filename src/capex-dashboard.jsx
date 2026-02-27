@@ -112,7 +112,7 @@ const SAMPLE_TRANSFERS = [
 ];
 
 const SAMPLE_BUDGET_SURRENDER = [
-  { no: 1, id: "PRJ-001", name: "ABB LV Switchboard Retrofit", wbs: "P.220080001.03.0303", budgetVariance: 238513.16 },
+  { no: 1, id: "PRJ-001", name: "ABB LV Switchboard Retrofit", wbs: "P.220080001.03.0303", budgetVariance: 237627.56 },
   { no: 2, id: "PRJ-008", name: "E-19-03A HEX Replacement", wbs: "P.250080001.03.0209", budgetVariance: 895000 },
   { no: 3, id: "PRJ-012", name: "K-11-01 Rotor Inspection and Refurbishment", wbs: "P.240080001.03.0203", budgetVariance: 470000 },
   { no: 4, id: "PRJ-013", name: "K-12-01 HP Rotor Inspection and Refurbishment", wbs: "P.240080001.03.0204", budgetVariance: 470000 },
@@ -123,14 +123,15 @@ const SAMPLE_BUDGET_SURRENDER = [
 ];
 
 const SAMPLE_BUDGET_REALLOCATION = [
-  { no: 1, id: "PRJ-030", name: "Replacement of Alarm Management System (AMS)", wbs: "P.240080001.03.0208", budgetVariance: -100000 },
-  { no: 2, id: "PRJ-031", name: "Rejuvenation HVAC of PDF & UET (BUSH)", wbs: "P.250080001.03.0230", budgetVariance: -193000 },
-  { no: 3, id: "PRJ-032", name: "Walkie Talkie License and System Upgrade", wbs: "P.250080001.03.0504", budgetVariance: -150010.56 },
-  { no: 4, id: "PRJ-033", name: "K-19-01 HP DE DGS Refurbishment", wbs: "", budgetVariance: -650000 },
-  { no: 5, id: "PRJ-034", name: "K-62-01A/B Compressor Replacement", wbs: "", budgetVariance: -200000 },
-  { no: 6, id: "PRJ-035", name: "Instrument Calibration Tools to Cater Melamine Plant Equipment", wbs: "P.250080001.03.0502", budgetVariance: -200000 },
-  { no: 7, id: "PRJ-036", name: "Structure Integrity Management System (SIMS) Rejuvenation (PDF, UET, Granulation) - Phase 1", wbs: "", budgetVariance: -2000000 },
-  { no: 8, id: "PRJ-037", name: "Piping & Insulation Rejuvenation and Life Extension (PIREL) - Phase 1", wbs: "", budgetVariance: -2000000 },
+  { no: 1, id: "PRJ-009", name: "Fire Water Pump And Foam Panel Replacement", wbs: "P.250080001.03.0308", budgetVariance: -8349.20 },
+  { no: 2, id: "PRJ-030", name: "Replacement of Alarm Management System (AMS)", wbs: "P.240080001.03.0208", budgetVariance: -100000 },
+  { no: 3, id: "PRJ-031", name: "Rejuvenation HVAC of PDF & UET (BUSH)", wbs: "P.250080001.03.0230", budgetVariance: -193000 },
+  { no: 4, id: "PRJ-032", name: "Walkie Talkie License and System Upgrade", wbs: "P.250080001.03.0504", budgetVariance: -150010.56 },
+  { no: 5, id: "PRJ-033", name: "K-19-01 HP DE DGS Refurbishment", wbs: "", budgetVariance: -650000 },
+  { no: 6, id: "PRJ-034", name: "K-62-01A/B Compressor Replacement", wbs: "", budgetVariance: -200000 },
+  { no: 7, id: "PRJ-035", name: "Instrument Calibration Tools to Cater Melamine Plant Equipment", wbs: "P.250080001.03.0502", budgetVariance: -340000 },
+  { no: 8, id: "PRJ-036", name: "Structure Integrity Management System (SIMS) Rejuvenation (PDF, UET, Granulation) - Phase 1", wbs: "", budgetVariance: -2000000 },
+  { no: 9, id: "PRJ-037", name: "Piping & Insulation Rejuvenation and Life Extension (PIREL) - Phase 1", wbs: "", budgetVariance: -2000000 },
 ];
 
 function formatMYR(n) {
@@ -492,6 +493,48 @@ export default function CapexDashboard() {
             remarks: r["Remarks"] || "",
           }));
           setTransfers(parsed);
+        }
+
+        if (wb.SheetNames.includes("Budget_Optimization")) {
+          const ws = wb.Sheets["Budget_Optimization"];
+          const rawRows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+          // Parse Budget Surrender section
+          const surrenderHeaderIdx = rawRows.findIndex(r => r && String(r[0]).includes("BUDGET SURRENDER"));
+          if (surrenderHeaderIdx >= 0) {
+            const colHeaders = rawRows[surrenderHeaderIdx + 1];
+            const sRows = [];
+            for (let i = surrenderHeaderIdx + 2; i < rawRows.length; i++) {
+              const r = rawRows[i];
+              if (!r || !r[1] || String(r[0]).includes("TOTAL")) break;
+              sRows.push({
+                no: r[0],
+                id: r[1],
+                name: (r[2] || "").trim(),
+                wbs: r[3] || "",
+                budgetVariance: parseFloat(r[4]) || 0,
+              });
+            }
+            if (sRows.length) setBudgetSurrender(sRows);
+          }
+
+          // Parse Budget Reallocation section
+          const reallocHeaderIdx = rawRows.findIndex(r => r && String(r[0]).includes("BUDGET REALLOCATION"));
+          if (reallocHeaderIdx >= 0) {
+            const rRows = [];
+            for (let i = reallocHeaderIdx + 2; i < rawRows.length; i++) {
+              const r = rawRows[i];
+              if (!r || !r[1] || String(r[0]).includes("TOTAL")) break;
+              rRows.push({
+                no: r[0],
+                id: r[1],
+                name: (r[2] || "").trim(),
+                wbs: r[3] || "",
+                budgetVariance: parseFloat(r[4]) || 0,
+              });
+            }
+            if (rRows.length) setBudgetReallocation(rRows);
+          }
         }
       } catch (err) {
         console.error("Error parsing Excel:", err);
