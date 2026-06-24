@@ -715,10 +715,9 @@ export default function CapexDashboard() {
         {activeTab === "overview" && (
           <>
             {/* Key Financial Metrics */}
-            <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
               {[
                 { label: "Original Budget", val: formatMYR(totals.originalBudget), color: PETRONAS.gray },
-                { label: "Budget Transfers", val: formatMYR(totals.netTransfer), color: totals.netTransfer >= 0 ? PETRONAS.emerald : PETRONAS.red },
                 { label: "Current Budget", val: formatMYR(totals.currentBudget), color: PETRONAS.blue },
                 { label: "Plan Utilization (YTD)", val: formatMYR(totals.ytdPlanTotal), sub: formatPct(totals.ytdPlanUtilPct), note: `As of ${referenceMonthLabel}`, color: PETRONAS.purple },
                 { label: "Actual Paid (YTD)", val: formatMYR(totals.ytdActualTotal), sub: formatPct(totals.ytdActualUtilPct), note: `As of ${referenceMonthLabel}`, color: PETRONAS.emerald },
@@ -754,7 +753,7 @@ export default function CapexDashboard() {
             </div>
 
             {/* Progress Bars */}
-            <div className="mb-4 grid gap-4 lg:grid-cols-2">
+            <div className="mb-4">
               <div className="rounded-xl border bg-white p-4 shadow">
                 <div className="text-sm font-medium mb-3">Utilization & Payment Progress</div>
                 <div className="space-y-3">
@@ -785,22 +784,6 @@ export default function CapexDashboard() {
                       <div className="h-3 rounded-full" style={{ width: Math.min(100, totals.paymentPct * 100) + "%", backgroundColor: PETRONAS.blue }} />
                     </div>
                   </div>
-                </div>
-              </div>
-
-              <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-sm font-medium mb-3">Project Distribution by Discipline</div>
-                <div className="h-48">
-                  <ResponsiveContainer>
-                    <PieChart>
-                      <Pie data={disciplineDistribution} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} label={({ name, value }) => `${name}: ${value}`}>
-                        {disciplineDistribution.map((entry, i) => (
-                          <Cell key={i} fill={getDisciplineColor(entry.name)} />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                    </PieChart>
-                  </ResponsiveContainer>
                 </div>
               </div>
             </div>
@@ -843,16 +826,32 @@ export default function CapexDashboard() {
               </div>
             </div>
 
-            {/* Project Status Pie + Plan vs Actual */}
-            <div className="mb-4 grid gap-4 lg:grid-cols-2">
+            {/* Project Status Pie + Discipline + Plan vs Actual */}
+            <div className="mb-4 grid gap-4 lg:grid-cols-3">
               <div className="rounded-xl border bg-white p-4 shadow">
-                <div className="text-sm font-medium mb-3">Project Status Distribution</div>
+                <div className="text-sm font-medium mb-3">CAPEX Status Distribution</div>
                 <div className="h-56">
                   <ResponsiveContainer>
                     <PieChart margin={{ top: 20, bottom: 20 }}>
                       <Pie data={statusDistribution} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={60} label={({ name, value }) => `${name}: ${value}`}>
                         {statusDistribution.map((entry, i) => (
                           <Cell key={i} fill={getStatusColor(entry.name)} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              <div className="rounded-xl border bg-white p-4 shadow">
+                <div className="text-sm font-medium mb-3">Project Distribution by Discipline</div>
+                <div className="h-56">
+                  <ResponsiveContainer>
+                    <PieChart>
+                      <Pie data={disciplineDistribution} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} label={({ name, value }) => `${name}: ${value}`}>
+                        {disciplineDistribution.map((entry, i) => (
+                          <Cell key={i} fill={getDisciplineColor(entry.name)} />
                         ))}
                       </Pie>
                       <Tooltip />
